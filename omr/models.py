@@ -19,7 +19,7 @@ class CustomStorage(FileSystemStorage):
 
 class File(models.Model):
     def file_path(self, filename):
-        return '/'.join(['LDraw models', self.model.__str__, filename])
+        return '/'.join(['LDraw models', self.model.__str__(), filename])
 
     model_number = models.CharField(max_length=50, help_text='Full model number including suffix, e.g. 8110-1')
     model = models.ForeignKey(to='Set', editable=False, null=True, blank=True, on_delete=models.CASCADE, related_name='files')
