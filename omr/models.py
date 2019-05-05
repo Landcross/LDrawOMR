@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.dispatch import receiver
+from django.urls import reverse
 from unidecode import unidecode
 
 from omr import services
@@ -73,6 +74,9 @@ class File(models.Model):
         except:
             error = ['Error: file could not be found or read']
             return error
+
+    def get_absolute_url(self):
+        return reverse('file_detail', args=[str(self.id)])
 
     def clean(self):
         if not self.is_main_model and not self.alternate_model:
