@@ -5,21 +5,27 @@ from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.dispatch import receiver
+from unidecode import unidecode
 
 from omr import services
 
 
+def get_valid_name(name):
+    name = str(name).strip()  # Strip start/end whitespaces
+    name = unidecode(name)  # Convert to ascii, e.g. é becomes e
+    name = re.sub(r'[:\\\/]', '-', name)  # Convert : \ and / to -
+    name = re.sub(r'(?u)[^-\w. ]', '', name)  # Remove everything else that's not a standard character
+    return name
+
+
 class CustomStorage(FileSystemStorage):
     def get_valid_name(self, name):
-        name = str(name).strip()  # Strip start/end whitespaces
-        name = unidecode.unidecode(name)  # Convert to ascii, e.g. é becomes e
-        name = re.sub(r'[:\\\/]', '-', name)  # Convert : \ and / to -
-        return re.sub(r'(?u)[^-\w. ]', '', name)  # Remove everything else that's not a standard character
+        return get_valid_name(name)
 
 
 class File(models.Model):
     def file_path(self, filename):
-        return '/'.join(['LDraw models', self.model.__str__(), filename])
+        return '/'.join(['LDraw models', get_valid_name(self.model.__str__()), filename])
 
     model_number = models.CharField(max_length=50, help_text='Full model number including suffix, e.g. 8110-1')
     model = models.ForeignKey(to='Set', editable=False, null=True, blank=True, on_delete=models.CASCADE, related_name='files')
