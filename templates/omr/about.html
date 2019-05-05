@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md">
+            <h1>About</h1>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h3>What is this?</h3>
+            <p>The model repository is a database of files in the 'LDraw File Format' describing models that are released as sets by LEGO. It also includes a specification of how the files should be named and structured (the OMR specification). If you want your models to be submitted to this website, you first need to make sure your files are according the OMR spec. You can read the specification <a href="http://www.ldraw.org/article/593.html">here</a>. And <a href="http://www.ldraw.org/omr_compliance">here</a> is a tutorial on how to make your LDraw files OMR compliant.</p>
+
+            <h3>How to use this website?</h3>
+            <p>This website is made purely for organizing and accessing all the OMR files. This site is <b>not</b> meant to be used as a database for LEGO sets, there are a lot of better websites for that. If you're looking for an LDraw file for a specific set, you can enter the set number at the top search bar. If you just want to go through all available files and filter through them, you can go to the <a href="{% url 'file_list'%}">all files</a> page.</p>
+
+            <h3>How can I submit my files?</h3>
+            <p>If you have LDraw files of official LEGO sets and you've made them OMR compliant, you can submit them <a href="http://forums.ldraw.org/list.php?17">here at the LDraw forum</a>. At the moment we don't have an onsite submit form.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h3>Rules and procedures for the OMR</h3>
+            <ul>
+                <li>The OMR located at omr.ldraw.org is linked from the homepage via a link named "Models".</li>
+                <li>The OMR is named "official" because it contains only LDraw replicas of sets (and their submodels) released by the LEGO Group. MOCs or fixes/changes to official models must not be uploaded.</li>
+                <li>The OMR hosts the actual LDraw file. Links to external model files aren't allowed.</li>
+                <li>The OMR hosts only models that are in line with the <a href="http://www.ldraw.org/article/349.html">LDraw.org Contributor Agreement</a> and contain the following statement: <br/> <pre>0 !LICENSE Redistributable under CCAL version 2.0 : see CAreadme.txt</pre></li>
+                <li>The models must respect the <a href="http://www.ldraw.org/article/593">Official Model Repository (OMR) Specification Version 1.0.3</a>. It is at the OMR-admins (or anybody else) discretion to <a href="http://www.ldraw.org/omr_compliance">"OMRize"</a> models in case they don't - granted that they obey to the LDraw.org Contributor Agreement.</li>
+                <li>All file manipulations are handled by the OMR-admin. There is no submission through users.</li>
+                <li>The user (Model author) uploads the model to the LDraw forum and if there was a public discussion the admin mirrors it to the OMR 7 days (or later) after the last post in this discussion. For the event there hasn't been any discussion the upload should be done 7 days (or later) after the initial post. After the upload is done, the model file shall be deleted, so that the forum doesn't clutter that much.</li>
+                <li>Updates of files made after the first official release should get a history line, which states the date, author and a short description of the change.</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

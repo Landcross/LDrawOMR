@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col">
+        {% with items=files %}
+            {% include "omr/includes/list_header.html" %}
+        {% endwith %}
+    </div>
+</div>
+
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th>Set</th>
+            <th>Model</th>
+            <th>Theme</th>
+            <th>Author</th>
+            <th>Is Complete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for file in files %}
+            <tr>
+                <td>
+                    <a href="{% url 'file_detail' file_id=file.id %}">
+                        {{ file.model }}
+                    </a>
+                </td>
+                <td>{{ file.main_or_alternate_str }}</td>
+                <td>{{ file.model.theme }}</td>
+                <td>{{ file.author }}</td>
+                <td>{{ file.is_complete }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">No search results</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col">
+        {% with items=files %}
+            {% include "general/includes/pagination.html" %}
+        {% endwith %}
+    </div>
+</div>

@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>{{ file.model }}</h1>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div id="brigl-container">
+                <img class="img-fluid blur" src="{{ file.model.set_img_url }}" />
+                <div id="brigl-overlay">
+                    <button id="brigl-button" type="button" class="btn btn-primary btn-lg" onclick="init()">Load 3D model <br/> <small>(can crash with some models)</small></button>
+                </div>
+            </div>
+
+            <pre id="logarea" style="display: none;">Initializing...</pre>
+            <div id="brigl" style="min-width: 400px; min-height: 600px; display: none;"></div>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header text-white bg-dark">File Details</div>
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Set</th>
+                                <td>
+                                    <a href="{% url 'file_list' %}?search={{ file.model.set_num }}">{{ file.model }}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Set Theme</th>
+                                <td>
+                                    <a href="{% url 'file_list' %}?themes={{ file.model.theme_id }}">{{ file.model.theme }}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Set Year</th>
+                                <td>{{ file.model.year }}</td>
+                            </tr>
+                            <tr>
+                                <th>Author</th>
+                                <td>
+                                    <a href="{% url 'file_list' %}?authors={{ file.author_id }}">{{ file.author }}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Missing Parts</th>
+                                <td>{{ file.missing_parts }}</td>
+                            </tr>
+                            <tr>
+                                <th>Missing Patterns</th>
+                                <td>{{ file.missing_patterns }}</td>
+                            </tr>
+                            <tr>
+                                <th>Missing Stickers</th>
+                                <td>{{ file.missing_stickers }}</td>
+                            </tr>
+                            <tr>
+                                <th>Added on</th>
+                                <td>{{ file.added }}</td>
+                            </tr>
+                            <tr>
+                                <th>Modified on</th>
+                                <td>{{ file.modified }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    {% if file.notes %}
+                        <h6>Notes:</h6>
+                        <hr />
+                        <p>{{ file.notes }}</p>
+                    {% endif %}
+
+                    <a class="btn btn-block btn-success" href="{{ file.file }}" role="button" download >Download</a>
+
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-block btn-warning" href="/admin/omr/file/{{ file.id }}/change/" role="button">Change</a>
+                        <a class="btn btn-block btn-danger" href="/admin/omr/file/{{ file.id }}/delete/" role="button">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header text-white bg-dark">File Header</div>
+                <div class="card-body">
+                    <samp>
+                        {% for row in file.file_header %}
+                            {{row}}<br />
+                        {% endfor %}
+                    </samp>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% load staticfiles %}
+    <script src="{% static '/js/brigl/three.min.js' %}"></script>
+    <script src="{% static '/js/brigl/prototype.js' %}"></script>
+    <script src="{% static '/js/brigl/Detector.js' %}"></script>
+    <script src="{% static '/js/brigl/brigl_materials.js' %}"></script>
+    <script src="{% static '/js/brigl/brigl.js' %}"></script>
+
+    {% autoescape off %}
+    <script>
+        function init()
+        {
+            document.getElementById("brigl-button").style.display = "none";
+            document.getElementById("brigl-container").style.display = "none";
+            document.getElementById("logarea").style.display = "";
+            document.getElementById("brigl").style.display = "";
+
+            if ( ! Detector.webgl ) { alert("no webgl"); return; }
+
+            // capture and show log
+            BRIGL.log = function(msg){document.getElementById("logarea").textContent = msg;};
+
+            // create the builder object to obtain the models
+            const builder = new BRIGL.Builder("/static/parts/", {dontUseSubfolders:true});
+
+            // load a model..
+            builder.loadModelByUrl("{{ file.file.url }}", {drawLines:true}, function(threejsMesh)
+            {
+                // when done, show it in a BriglContainer
+                new BRIGL.BriglContainer(document.getElementById("brigl"), threejsMesh).render();
+            });
+
+        }
+    </script>
+    {% endautoescape %}
+{% endblock %}

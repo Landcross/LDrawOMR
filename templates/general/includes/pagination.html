@@ -1,0 +1,86 @@
+<ul class="list-inline">
+    <li class="list-inline-item">
+        <nav>
+            <ul class="pagination pagination-sm">
+                {% if items.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="{{ items.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% if items.paginator.num_pages > 7 %}
+                    {% if items.number < 5 %}
+                        {% comment %}Produces [Prev][1][2][3][4][5][...][10][Next]{% endcomment %}
+                        {% for page in items.paginator.page_range %}
+                            {% if page <= 5 %}
+                                {% if items.number == forloop.counter %}
+                                    <li class="page-item active"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="{{ items.paginator.num_pages }}">{{ items.paginator.num_pages }}</a>
+                        </li>
+                    {% endif %}
+
+                    {% if items.number >= 5 and items.number < items.paginator.num_pages|add:"-3" %}
+                        {% comment %}Produces [Prev][1][...][3][4][5][...][10][Next]{% endcomment %}
+                        <li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        {% for page in items.paginator.page_range %}
+                            {% if page >= items.number|add:"-2" and page < items.number|add:"3" %}
+                                {% if items.number == forloop.counter %}
+                                    <li class="page-item active"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-page="{{ items.paginator.num_pages }}">{{ items.paginator.num_pages }}</a>
+                        </li>
+                    {% endif %}
+
+                    {% if items.number >= items.paginator.num_pages|add:"-3" %}
+                        {% comment %}Produces [Prev][1][...][6][7][8][...][10]{% endcomment %}
+                        <li class="page-item"><a class="page-link" href="#" data-page="1">1</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        {% for page in items.paginator.page_range %}
+                            {% if page >= items.paginator.num_pages|add:"-4" %}
+                                {% if items.number == forloop.counter %}
+                                    <li class="page-item active"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    {% comment %}There are 7 pages or less in total{% endcomment %}
+                    {% for page in items.paginator.page_range %}
+                        {% if items.number == forloop.counter %}
+                            <li class="page-item active"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="#" data-page="{{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if items.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="#" data-page="{{ items.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </li>
+    <li class="list-inline-item d-none d-md-inline-block"><p>Showing {{ items.start_index }}-{{ items.end_index }} of {{ items.paginator.count }}</p></li>
+</ul>

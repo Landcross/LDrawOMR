@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-2 border-right">
+            <h3>Filters</h3>
+            <form method="post" id="file-filter-form" class="filter-sidebar">
+                {{ filter_form }}
+            </form>
+        </div>
+
+        <div class="col table-responsive" id="table-wrapper">
+            <!--DO NOT REMOVE THIS-->
+        </div>
+    </div>
+
+    <script>
+        window.onload = initializeTable("files");
+
+        $(document).ready(function() {
+            $('.select2-widget').select2({ placeholder: 'Click to select...' });
+        });
+
+        $("#file-filter-form").change(function (event) {
+            event.preventDefault();
+            analyzeForm();
+        });
+
+        $("#file-filter-form").keyup(function (event) {
+            event.preventDefault();
+            analyzeForm();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,39 @@
+<div class="form-group">
+    <select class="form-control form-control-sm sort-order-link">
+        {% if request.GET.so == 'snum' %}
+            <option value="snum" selected="selected">Set number</option>
+        {% else %}
+            <option value="snum">Set number</option>
+        {% endif %}
+
+        {% if request.GET.so == 'sname' %}
+            <option value="sname" selected="selected">Set name</option>
+        {% else %}
+            <option value="sname">Set name</option>
+        {% endif %}
+
+        {% if request.GET.so == 'stheme' %}
+            <option value="stheme" selected="selected">Set theme</option>
+        {% else %}
+            <option value="stheme">Set theme</option>
+        {% endif %}
+
+        {% if request.GET.so == 'author' %}
+            <option value="author" selected="selected">File author</option>
+        {% else %}
+            <option value="author">File author</option>
+        {% endif %}
+
+        {% if request.GET.so == 'added-asc' %}
+            <option value="added-asc" selected="selected">Date added (asc)</option>
+        {% else %}
+            <option value="added-asc">Date added (asc)</option>
+        {% endif %}
+
+        {% if request.GET.so == 'added-desc' %}
+            <option value="added-desc" selected="selected">Date added (desc)</option>
+        {% else %}
+            <option value="added-desc">Date added (desc)</option>
+        {% endif %}
+    </select>
+</div>

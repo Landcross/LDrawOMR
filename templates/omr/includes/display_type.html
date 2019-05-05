@@ -1,0 +1,15 @@
+<div class="form-group">
+    <select class="form-control form-control-sm display-type-link">
+        {% if request.GET.dt == 'table' %}
+            <option value="table" selected="selected">Table</option>
+        {% else %}
+            <option value="table">Table</option>
+        {% endif %}
+
+        {% if request.GET.dt == 'list' %}
+            <option value="list" selected="selected">List</option>
+        {% else %}
+            <option value="list">List</option>
+        {% endif %}
+    </select>
+</div>

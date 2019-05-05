@@ -1,0 +1,21 @@
+<div class="row justify-content-between">
+    <div class="col-lg-6">
+        {% include "general/includes/pagination.html" %}
+    </div>
+    <div class="col">
+        <div class="row">
+            <div class="col-lg-2">
+                <p>Display:</p>
+            </div>
+            <div class="col-lg-4">
+                {% include "omr/includes/display_type.html" %}
+            </div>
+            <div class="col-lg-2">
+                <p>Sorting:</p>
+            </div>
+            <div class="col-lg-4">
+                {% include "omr/includes/sort_order.html" %}
+            </div>
+        </div>
+    </div>
+</div>

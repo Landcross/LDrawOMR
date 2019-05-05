@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>Statistics</h1>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header text-white bg-dark">Top Authors</div>
+                <div class="card-body">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Author</th>
+                                <th>Files</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for author in authors %}
+                                <tr>
+                                    <td>{{ author }}</td>
+                                    <td>{{ author.num_files }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header text-white bg-dark">Top Themes</div>
+                <div class="card-body">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Theme</th>
+                                <th>Files</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for theme in themes %}
+                                <tr>
+                                    <td>{{ theme }}</td>
+                                    <td>{{ theme.num_files }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header text-white bg-dark">Other</div>
+                <div class="card-body">
+                    <p>There are a total of <b>{{total_files}}</b> files in the database...</p>
+                    <ul>
+                        <li>...of which <b>{{num_mainmodel}}</b> are main model.</li>
+                        <li>...of which <b>{{ num_alternatemodel }}</b> are alternates.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
