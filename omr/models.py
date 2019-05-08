@@ -53,8 +53,10 @@ class File(models.Model):
         return self.alternate_model
 
     def file_header(self):
+        path = self.file.path
+
         try:
-            with open(self.file.path, encoding='utf8') as file:
+            with open(path, encoding='utf8') as file:
                 header_complete = False
                 lines = file.readlines()
                 linenumber = 0
@@ -71,8 +73,12 @@ class File(models.Model):
                         header.append(line)
                     linenumber += 1
                 return header
-        except:
-            error = ['Error: file could not be found or read']
+        except Exception as e:
+            error = [
+                'Error: file could not be found or read',
+                e.args,
+                path,
+            ]
             return error
 
     def get_absolute_url(self):
