@@ -77,7 +77,7 @@
                         <p>{{ file.notes }}</p>
                     {% endif %}
 
-                    <a class="btn btn-block btn-success" href="{{ file.file }}" role="button" download >Download</a>
+                    <a class="btn btn-block btn-success" href="{{ file.file.url }}" role="button" download >Download</a>
 
                     {% if user.is_authenticated %}
                         <a class="btn btn-block btn-warning" href="/admin/omr/file/{{ file.id }}/change/" role="button">Change</a>
