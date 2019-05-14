@@ -127,7 +127,7 @@
             BRIGL.log = function(msg){document.getElementById("logarea").textContent = msg;};
 
             // create the builder object to obtain the models
-            const builder = new BRIGL.Builder("/static/parts/", {dontUseSubfolders:true});
+            const builder = new BRIGL.Builder(["/static/ldraw/parts/", "/static/ldraw/p/"], {dontUseSubfolders:true});
 
             // load a model..
             builder.loadModelByUrl("{{ file.file.url }}", {drawLines:true}, function(threejsMesh)
